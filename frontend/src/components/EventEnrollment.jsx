@@ -421,6 +421,8 @@ const EventEnrollment = () => {
                 />
 
                 <button
+                  type="button"
+
                   onClick={() =>
                     setActiveTab("visit")
                   }
@@ -454,6 +456,8 @@ const EventEnrollment = () => {
                 </button>
 
                 <button
+                  type="button"
+
                   onClick={() =>
                     setActiveTab("event")
                   }
@@ -684,10 +688,6 @@ const EventEnrollment = () => {
                         11:00 AM - 12:00 PM
                       </option>
 
-                      <option value="12:00 PM - 1:00 PM">
-                        12:00 PM - 1:00 PM
-                      </option>
-
                     </select>
 
                   </div>
@@ -887,6 +887,7 @@ const EventEnrollment = () => {
                     "
                     required
                   >
+
                     <option value="">
                       Select Event
                     </option>
