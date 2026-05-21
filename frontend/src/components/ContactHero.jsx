@@ -8,7 +8,7 @@ const ContactHero = () => {
       className="
         relative
         overflow-hidden
-        bg-[#6D24A5]
+        bg-primary
 
         pt-[170px]
         md:pt-[210px]

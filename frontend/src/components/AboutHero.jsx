@@ -8,7 +8,7 @@ const AboutHero = () => {
       className="
         relative
 
-        bg-[#6D24A5]
+        bg-primary
 
         overflow-hidden
 
