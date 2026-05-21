@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+/* =========================
+   BASE
+========================= */
+
+@layer base {
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: "Nunito", sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+    background: #FCFCFC;
+    color: #000;
+    font-family: "Nunito", sans-serif;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+/* =========================
+   THEME
+========================= */
+
+@theme {
+  --color-primary: #732D92;
+  --color-secondary: #E8D7F3;
+  --color-yellow: #FFF200;
+  --color-orange: #F97315;
+  --color-dark: #000000;
+  --color-light: #FFFFFF;
+
+  /* pastel curriculum colors */
+  --color-pink-soft: #F7E3EE;
+  --color-blue-soft: #E5F1F8;
+  --color-purple-soft: #EEE7FA;
+  --color-green-soft: #E5F4EA;
+  --color-yellow-soft: #F8F1DD;
+  --color-cyan-soft: #DDF4F5;
+
+  /* neutral shades */
+  --color-text-light: #6B7280;
+  --color-bg-soft: #FCFCFC;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container-custom {
+  @apply max-w-[1280px] mx-auto px-5 lg:px-8;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-primary {
+  @apply bg-primary text-white px-8 py-4 rounded-full font-extrabold transition-all duration-300 hover:scale-105;
+}
+
+.btn-yellow {
+  @apply bg-yellow text-black px-7 py-3 rounded-full font-extrabold transition-all duration-300 hover:scale-105;
+}
+
+/* =========================
+   TITLES
+========================= */
+
+.section-title {
+  @apply text-4xl md:text-6xl font-black leading-tight text-black;
+}
+
+.section-subtitle {
+  @apply uppercase tracking-[4px] text-primary font-extrabold text-sm;
+}
+
+/* =========================
+   CURRICULUM CARDS
+========================= */
+
+.curriculum-card {
+  @apply rounded-[34px] p-8 transition-all duration-300 hover:-translate-y-2;
+}
+
+.curriculum-card h3 {
+  @apply text-[30px] leading-[38px] font-bold text-black mb-4;
+}
+
+.curriculum-card p {
+  @apply text-gray-700 leading-7 text-[15px];
+}
+
+/* =========================
+   3D FLIP CARD
+========================= */
+
+.perspective-\[2000px\] {
+  perspective: 2000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* =========================
+   FLOATING SHAPES ANIMATION
+========================= */
+
+@keyframes float1 {
+  0% {
+    transform: translateY(0px) rotate(-12deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(-12deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(-12deg);
+  }
+}
+
+@keyframes float2 {
+  0% {
+    transform: translateY(0px) rotate(15deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(15deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(15deg);
+  }
+}
+
+@keyframes float3 {
+  0% {
+    transform: translateY(0px) rotate(18deg);
+  }
+
+  50% {
+    transform: translateY(-14px) rotate(18deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(18deg);
+  }
+}
+
+@keyframes float4 {
+  0% {
+    transform: translateY(0px) rotate(18deg);
+  }
+
+  50% {
+    transform: translateY(-16px) rotate(18deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(18deg);
+  }
+}
+
+/* =========================
+   OPTIONAL UTILITIES
+========================= */
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4B5FD;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A78BFA;
+}
