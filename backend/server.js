@@ -13,7 +13,16 @@ const app = express();
    MIDDLEWARE
 ========================= */
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://kidzee-school.netlify.app/",
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 

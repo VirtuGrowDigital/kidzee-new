@@ -67,7 +67,7 @@ const EnquiryForm = () => {
     try {
 
       const response = await fetch(
-        "http://localhost:8000/api/enquiry",
+        "https://kidzee-new-production.up.railway.app/api/enquiry",
         {
           method: "POST",
 

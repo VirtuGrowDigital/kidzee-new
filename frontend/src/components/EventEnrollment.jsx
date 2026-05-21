@@ -134,7 +134,7 @@ const EventEnrollment = () => {
     try {
 
       const response = await fetch(
-        "http://localhost:8000/api/campus-visit",
+        "https://kidzee-new-production.up.railway.app/api/campus-visit",
         {
           method: "POST",
 
@@ -187,7 +187,7 @@ const EventEnrollment = () => {
     try {
 
       const response = await fetch(
-        "http://localhost:8000/api/event-enrollment",
+        "https://kidzee-new-production.up.railway.app/api/event-enrollment",
         {
           method: "POST",
 
