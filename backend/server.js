@@ -8,31 +8,38 @@ dotenv.config();
 const app = express();
 
 /* =========================
-   CORS
+   CORS FIX
 ========================= */
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://kidzee-school.netlify.app",
+    origin: "*",
+
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "OPTIONS",
     ],
 
-    methods: ["GET", "POST"],
-
-    credentials: true,
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 
 /* =========================
-   HOME ROUTE
+   TEST ROUTE
 ========================= */
 
 app.get("/", (req, res) => {
-
-  res.send("Backend Running Successfully");
+  res.send("Kidzee Backend Running");
 });
 
 /* =========================
@@ -40,7 +47,6 @@ app.get("/", (req, res) => {
 ========================= */
 
 const transporter = nodemailer.createTransport({
-
   service: "gmail",
 
   auth: {
@@ -66,15 +72,14 @@ app.post("/api/enquiry", async (req, res) => {
     } = req.body;
 
     await transporter.sendMail({
-
       from: process.env.EMAIL_USER,
 
       to: process.env.EMAIL_USER,
 
-      subject: "New Enquiry Form",
+      subject: "New Enquiry Submission",
 
       html: `
-        <h2>New Enquiry</h2>
+        <h2>New Enquiry Form</h2>
 
         <p><b>Parent Name:</b> ${parentName}</p>
 
@@ -99,7 +104,7 @@ app.post("/api/enquiry", async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Server Error",
     });
   }
 });
@@ -124,15 +129,14 @@ app.post("/api/campus-visit", async (req, res) => {
     } = req.body;
 
     await transporter.sendMail({
-
       from: process.env.EMAIL_USER,
 
       to: process.env.EMAIL_USER,
 
-      subject: "Campus Visit Booking",
+      subject: "New Campus Visit Booking",
 
       html: `
-        <h2>Campus Visit Request</h2>
+        <h2>Campus Visit Booking</h2>
 
         <p><b>Parent Name:</b> ${parentName}</p>
 
@@ -154,7 +158,7 @@ app.post("/api/campus-visit", async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Campus visit booked successfully",
+      message: "Campus Visit Scheduled",
     });
 
   } catch (error) {
@@ -163,7 +167,7 @@ app.post("/api/campus-visit", async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Server Error",
     });
   }
 });
@@ -187,12 +191,11 @@ app.post("/api/event-enrollment", async (req, res) => {
     } = req.body;
 
     await transporter.sendMail({
-
       from: process.env.EMAIL_USER,
 
       to: process.env.EMAIL_USER,
 
-      subject: "Event Enrollment",
+      subject: "New Event Enrollment",
 
       html: `
         <h2>Event Enrollment</h2>
@@ -215,7 +218,7 @@ app.post("/api/event-enrollment", async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Event registration successful",
+      message: "Event Enrollment Successful",
     });
 
   } catch (error) {
@@ -224,18 +227,20 @@ app.post("/api/event-enrollment", async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Server Error",
     });
   }
 });
 
 /* =========================
-   SERVER
+   PORT
 ========================= */
 
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
 
-  console.log(`Server running on port ${PORT}`);
+  console.log(
+    `Server running on port ${PORT}`
+  );
 });
