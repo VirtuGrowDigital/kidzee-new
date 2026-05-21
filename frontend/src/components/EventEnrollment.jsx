@@ -1,980 +1,213 @@
-// src/components/contact/EventEnrollment.jsx
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 
-import { useState } from "react";
+dotenv.config();
 
-import {
-  PartyPopper,
-  Gift,
-  Music,
-  Palette,
-  School,
-  ShieldCheck,
-  Stars,
-  CalendarDays,
-} from "lucide-react";
+const app = express();
 
-import { motion, AnimatePresence } from "framer-motion";
+/* ======================
+   MIDDLEWARE
+====================== */
 
-import blockShape from "../assets/block-shape.png";
+app.use(express.json());
 
-import SuccessPopup from "./SuccessPopup";
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
-const eventIcons = [
-  {
-    icon: PartyPopper,
-    className:
-      "top-[80px] left-[8%] text-[#FFF200]",
+/* ======================
+   TEST ROUTE
+====================== */
+
+app.get("/", (req, res) => {
+  res.send("Backend Running");
+});
+
+/* ======================
+   MAIL CONFIG
+====================== */
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
+});
 
-  {
-    icon: Gift,
-    className:
-      "bottom-[100px] left-[12%] text-[#EC4899]",
-  },
+/* ======================
+   ENQUIRY FORM
+====================== */
 
-  {
-    icon: Music,
-    className:
-      "top-[120px] right-[10%] text-[#14B8A6]",
-  },
+app.post("/api/enquiry", async (req, res) => {
 
-  {
-    icon: Palette,
-    className:
-      "bottom-[120px] right-[8%] text-[#F59E0B]",
-  },
-];
+  try {
 
-const visitIcons = [
-  {
-    icon: School,
-    className:
-      "top-[90px] left-[8%] text-[#FFF200]",
-  },
+    const {
+      parentName,
+      childName,
+      phone,
+      email,
+      message,
+    } = req.body;
 
-  {
-    icon: ShieldCheck,
-    className:
-      "bottom-[100px] left-[12%] text-[#14B8A6]",
-  },
+    await transporter.sendMail({
 
-  {
-    icon: Stars,
-    className:
-      "top-[120px] right-[10%] text-[#EC4899]",
-  },
+      from: process.env.EMAIL_USER,
 
-  {
-    icon: CalendarDays,
-    className:
-      "bottom-[120px] right-[8%] text-[#F59E0B]",
-  },
-];
+      to: process.env.EMAIL_USER,
 
-const EventEnrollment = () => {
+      subject: "New Enquiry",
 
-  const [activeTab, setActiveTab] =
-    useState("visit");
+      html: `
+        <h2>New Enquiry</h2>
 
-  const [successPopup, setSuccessPopup] =
-    useState(false);
-
-  const [popupTitle, setPopupTitle] =
-    useState("");
-
-  const [popupDescription, setPopupDescription] =
-    useState("");
-
-  const [visitForm, setVisitForm] = useState({
-    parentName: "",
-    childName: "",
-    phone: "",
-    email: "",
-    address: "",
-    date: "",
-    time: "",
-    notes: "",
-  });
-
-  const [eventForm, setEventForm] = useState({
-    parentName: "",
-    childName: "",
-    phone: "",
-    email: "",
-    address: "",
-    event: "",
-    notes: "",
-  });
-
-  const floatingIcons =
-    activeTab === "visit"
-      ? visitIcons
-      : eventIcons;
-
-  const handleVisitChange = (e) => {
-
-    setVisitForm({
-      ...visitForm,
-      [e.target.name]: e.target.value,
+        <p><b>Parent:</b> ${parentName}</p>
+        <p><b>Child:</b> ${childName}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Message:</b> ${message}</p>
+      `,
     });
-  };
 
-  const handleEventChange = (e) => {
-
-    setEventForm({
-      ...eventForm,
-      [e.target.name]: e.target.value,
+    res.status(200).json({
+      success: true,
     });
-  };
 
-  const handleVisitSubmit = async (e) => {
+  } catch (error) {
 
-    e.preventDefault();
+    console.log(error);
 
-    try {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
 
-      const response = await fetch(
-        "https://kidzee-new-production.up.railway.app/api/campus-visit",
-        {
-          method: "POST",
+/* ======================
+   CAMPUS VISIT
+====================== */
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+app.post("/api/campus-visit", async (req, res) => {
 
-          body: JSON.stringify(visitForm),
-        }
-      );
+  try {
 
-      const data = await response.json();
+    const {
+      parentName,
+      childName,
+      phone,
+      email,
+      address,
+      date,
+      time,
+      notes,
+    } = req.body;
 
-      if (data.success) {
+    await transporter.sendMail({
 
-        setPopupTitle(
-          "Campus Visit Scheduled! 🏫"
-        );
+      from: process.env.EMAIL_USER,
 
-        setPopupDescription(
-          "We are excited to welcome you to Kidzee. Our team will contact you shortly with your visit details."
-        );
+      to: process.env.EMAIL_USER,
 
-        setSuccessPopup(true);
+      subject: "Campus Visit",
 
-        setVisitForm({
-          parentName: "",
-          childName: "",
-          phone: "",
-          email: "",
-          address: "",
-          date: "",
-          time: "",
-          notes: "",
-        });
-      }
+      html: `
+        <h2>Campus Visit</h2>
 
-    } catch (error) {
+        <p><b>Parent:</b> ${parentName}</p>
+        <p><b>Child:</b> ${childName}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Address:</b> ${address}</p>
+        <p><b>Date:</b> ${date}</p>
+        <p><b>Time:</b> ${time}</p>
+        <p><b>Notes:</b> ${notes}</p>
+      `,
+    });
 
-      console.log(error);
+    res.status(200).json({
+      success: true,
+    });
 
-      alert("Something went wrong");
-    }
-  };
+  } catch (error) {
 
-  const handleEventSubmit = async (e) => {
+    console.log(error);
 
-    e.preventDefault();
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
 
-    try {
+/* ======================
+   EVENT ENROLLMENT
+====================== */
 
-      const response = await fetch(
-        "https://kidzee-new-production.up.railway.app/api/event-enrollment",
-        {
-          method: "POST",
+app.post("/api/event-enrollment", async (req, res) => {
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+  try {
 
-          body: JSON.stringify(eventForm),
-        }
-      );
+    const {
+      parentName,
+      childName,
+      phone,
+      email,
+      address,
+      event,
+      notes,
+    } = req.body;
 
-      const data = await response.json();
+    await transporter.sendMail({
 
-      if (data.success) {
+      from: process.env.EMAIL_USER,
 
-        setPopupTitle(
-          "Event Enrollment Successful! 🎉"
-        );
+      to: process.env.EMAIL_USER,
 
-        setPopupDescription(
-          "Your child is now enrolled for the event. We can't wait to celebrate and learn together!"
-        );
+      subject: "Event Enrollment",
 
-        setSuccessPopup(true);
+      html: `
+        <h2>Event Enrollment</h2>
 
-        setEventForm({
-          parentName: "",
-          childName: "",
-          phone: "",
-          email: "",
-          address: "",
-          event: "",
-          notes: "",
-        });
-      }
-
-    } catch (error) {
-
-      console.log(error);
-
-      alert("Something went wrong");
-    }
-  };
-
-  return (
-    <>
-      <section
-        id="interactive-form"
-        className="
-          relative
-          overflow-hidden
-          bg-white
-          py-24
-          md:py-32
-        "
-      >
-
-        {/* FLOATING BLOCKS */}
-
-        <img
-          src={blockShape}
-          alt=""
-          className="
-            absolute
-
-            left-[-100px]
-            top-[100px]
-
-            w-[260px]
-            md:w-[520px]
-
-            opacity-50
-
-            rotate-[18deg]
-
-            animate-[float1_8s_ease-in-out_infinite]
-          "
-        />
-
-        <img
-          src={blockShape}
-          alt=""
-          className="
-            absolute
-
-            right-[-100px]
-            bottom-[20px]
-
-            w-[320px]
-            md:w-[700px]
-
-            opacity-50
-
-            rotate-[-18deg]
-
-            animate-[float2_9s_ease-in-out_infinite]
-          "
-        />
-
-        {/* FLOATING ICONS */}
-
-        {floatingIcons.map((item, index) => {
-
-          const Icon = item.icon;
-
-          return (
-            <div
-              key={index}
-              className={`
-                absolute
-
-                ${item.className}
-
-                opacity-30
-
-                animate-bounce
-              `}
-            >
-
-              <Icon
-                size={60}
-                strokeWidth={1.5}
-              />
-
-            </div>
-          );
-        })}
-
-        <div className="max-w-[950px] mx-auto px-6 relative z-10">
-
-          <div
-            className="
-              relative
-
-              overflow-hidden
-
-              bg-[#6D24A5]
-
-              rounded-[42px]
-
-              p-8
-              md:p-14
-
-              shadow-[0_20px_60px_rgba(109,36,165,0.2)]
-            "
-          >
-
-            {/* GLOW */}
-
-            <div
-              className="
-                absolute
-
-                top-[-120px]
-                right-[-120px]
-
-                w-[260px]
-                h-[260px]
-
-                rounded-full
-
-                bg-[#B46DFF]
-
-                opacity-30
-
-                blur-[100px]
-              "
-            ></div>
-
-            {/* TOGGLE */}
-
-            <div
-              className="
-                relative
-                z-10
-
-                flex
-                justify-center
-
-                mb-12
-              "
-            >
-
-              <div
-                className="
-                  relative
-
-                  bg-white/10
-
-                  p-2
-
-                  rounded-full
-
-                  backdrop-blur-sm
-
-                  flex
-
-                  w-full
-                  max-w-[520px]
-                "
-              >
-
-                <motion.div
-                  layoutId="active-pill"
-
-                  className="
-                    absolute
-
-                    top-2
-                    bottom-2
-
-                    w-[calc(50%-8px)]
-
-                    rounded-full
-
-                    bg-[#FFF200]
-                  "
-
-                  animate={{
-                    x:
-                      activeTab === "visit"
-                        ? 0
-                        : "100%",
-                  }}
-
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30,
-                  }}
-                />
-
-                <button
-                  onClick={() =>
-                    setActiveTab("visit")
-                  }
-
-                  className={`
-                    relative
-                    z-10
-
-                    flex-1
-
-                    h-14
-
-                    rounded-full
-
-                    text-sm
-                    md:text-base
-
-                    font-black
-
-                    transition-all
-                    duration-300
-
-                    ${
-                      activeTab === "visit"
-                        ? "text-black"
-                        : "text-white"
-                    }
-                  `}
-                >
-                  Book Campus Visit
-                </button>
-
-                <button
-                  onClick={() =>
-                    setActiveTab("event")
-                  }
-
-                  className={`
-                    relative
-                    z-10
-
-                    flex-1
-
-                    h-14
-
-                    rounded-full
-
-                    text-sm
-                    md:text-base
-
-                    font-black
-
-                    transition-all
-                    duration-300
-
-                    ${
-                      activeTab === "event"
-                        ? "text-black"
-                        : "text-white"
-                    }
-                  `}
-                >
-                  Enroll For Event
-                </button>
-
-              </div>
-
-            </div>
-
-            <AnimatePresence mode="wait">
-
-              {activeTab === "visit" ? (
-
-                <motion.form
-                  key="visit"
-
-                  onSubmit={handleVisitSubmit}
-
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-
-                  exit={{
-                    opacity: 0,
-                    y: -20,
-                  }}
-
-                  transition={{
-                    duration: 0.35,
-                  }}
-
-                  className="
-                    relative
-                    z-10
-
-                    grid
-                    gap-6
-                  "
-                >
-
-                  <input
-                    type="text"
-                    name="parentName"
-                    value={visitForm.parentName}
-                    onChange={handleVisitChange}
-                    placeholder="Parent Name"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="text"
-                    name="childName"
-                    value={visitForm.childName}
-                    onChange={handleVisitChange}
-                    placeholder="Child Name"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={visitForm.phone}
-                    onChange={handleVisitChange}
-                    placeholder="Phone Number"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="email"
-                    name="email"
-                    value={visitForm.email}
-                    onChange={handleVisitChange}
-                    placeholder="Email Address"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="text"
-                    name="address"
-                    value={visitForm.address}
-                    onChange={handleVisitChange}
-                    placeholder="Residential Address"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <div className="grid md:grid-cols-2 gap-6">
-
-                    <input
-                      type="date"
-                      name="date"
-                      value={visitForm.date}
-                      onChange={handleVisitChange}
-                      className="
-                        h-14
-
-                        rounded-2xl
-
-                        px-5
-
-                        bg-white
-
-                        outline-none
-                      "
-                      required
-                    />
-
-                    <select
-                      name="time"
-                      value={visitForm.time}
-                      onChange={handleVisitChange}
-                      className="
-                        h-14
-
-                        rounded-2xl
-
-                        px-5
-
-                        bg-white
-
-                        outline-none
-
-                        text-[#555]
-                      "
-                      required
-                    >
-
-                      <option value="">
-                        Select Visit Time Slot
-                      </option>
-
-                      <option value="9:00 AM - 10:00 AM">
-                        9:00 AM - 10:00 AM
-                      </option>
-
-                      <option value="10:00 AM - 11:00 AM">
-                        10:00 AM - 11:00 AM
-                      </option>
-
-                      <option value="11:00 AM - 12:00 PM">
-                        11:00 AM - 12:00 PM
-                      </option>
-
-                      <option value="12:00 PM - 1:00 PM">
-                        12:00 PM - 1:00 PM
-                      </option>
-
-                    </select>
-
-                  </div>
-
-                  <textarea
-                    rows="4"
-                    name="notes"
-                    value={visitForm.notes}
-                    onChange={handleVisitChange}
-                    placeholder="Additional Notes"
-                    className="
-                      rounded-2xl
-
-                      p-5
-
-                      bg-white
-
-                      outline-none
-
-                      resize-none
-                    "
-                  ></textarea>
-
-                  <button
-                    type="submit"
-                    className="
-                      bg-[#FFF200]
-
-                      text-primary
-
-                      h-14
-
-                      rounded-full
-
-                      font-black
-
-                      transition-all
-                      duration-300
-
-                      hover:scale-[1.02]
-                    "
-                  >
-                    Schedule Campus Visit
-                  </button>
-
-                </motion.form>
-
-              ) : (
-
-                <motion.form
-                  key="event"
-
-                  onSubmit={handleEventSubmit}
-
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-
-                  exit={{
-                    opacity: 0,
-                    y: -20,
-                  }}
-
-                  transition={{
-                    duration: 0.35,
-                  }}
-
-                  className="
-                    relative
-                    z-10
-
-                    grid
-                    gap-6
-                  "
-                >
-
-                  <input
-                    type="text"
-                    name="parentName"
-                    value={eventForm.parentName}
-                    onChange={handleEventChange}
-                    placeholder="Parent Name"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="text"
-                    name="childName"
-                    value={eventForm.childName}
-                    onChange={handleEventChange}
-                    placeholder="Child Name"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={eventForm.phone}
-                    onChange={handleEventChange}
-                    placeholder="Phone Number"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="email"
-                    name="email"
-                    value={eventForm.email}
-                    onChange={handleEventChange}
-                    placeholder="Email Address"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <input
-                    type="text"
-                    name="address"
-                    value={eventForm.address}
-                    onChange={handleEventChange}
-                    placeholder="Residential Address"
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  />
-
-                  <select
-                    name="event"
-                    value={eventForm.event}
-                    onChange={handleEventChange}
-                    className="
-                      h-14
-
-                      rounded-2xl
-
-                      px-5
-
-                      bg-white
-
-                      outline-none
-                    "
-                    required
-                  >
-                    <option value="">
-                      Select Event
-                    </option>
-
-                    <option>
-                      Annual Function
-                    </option>
-
-                    <option>
-                      Summer Camp
-                    </option>
-
-                    <option>
-                      Sports Day
-                    </option>
-
-                    <option>
-                      Art Competition
-                    </option>
-
-                  </select>
-
-                  <textarea
-                    rows="4"
-                    name="notes"
-                    value={eventForm.notes}
-                    onChange={handleEventChange}
-                    placeholder="Additional Notes"
-                    className="
-                      rounded-2xl
-
-                      p-5
-
-                      bg-white
-
-                      outline-none
-
-                      resize-none
-                    "
-                  ></textarea>
-
-                  <button
-                    type="submit"
-                    className="
-                      bg-[#FFF200]
-
-                      text-primary
-
-                      h-14
-
-                      rounded-full
-
-                      font-black
-
-                      transition-all
-                      duration-300
-
-                      hover:scale-[1.02]
-                    "
-                  >
-                    Register Event
-                  </button>
-
-                </motion.form>
-
-              )}
-
-            </AnimatePresence>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <SuccessPopup
-        open={successPopup}
-
-        onClose={() =>
-          setSuccessPopup(false)
-        }
-
-        title={popupTitle}
-
-        description={popupDescription}
-      />
-    </>
-  );
-};
-
-export default EventEnrollment;
+        <p><b>Parent:</b> ${parentName}</p>
+        <p><b>Child:</b> ${childName}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Address:</b> ${address}</p>
+        <p><b>Event:</b> ${event}</p>
+        <p><b>Notes:</b> ${notes}</p>
+      `,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+/* ======================
+   SERVER
+====================== */
+
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
