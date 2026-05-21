@@ -10,6 +10,7 @@ const events = [
     time: "5:00 PM - 8:00 PM",
     location: "Kidzee Auditorium, Lucknow",
   },
+
   {
     day: "18",
     month: "JUN",
@@ -19,6 +20,7 @@ const events = [
     time: "10:00 AM - 1:00 PM",
     location: "Kidzee Activity Hall, Lucknow",
   },
+
   {
     day: "04",
     month: "JUL",
@@ -31,64 +33,225 @@ const events = [
 ];
 
 const Events = () => {
+
   return (
-    <section className="relative py-20 md:py-28 bg-[#F7F7F7] overflow-hidden">
+
+    <section
+      className="
+        relative
+
+        py-20
+        md:py-28
+
+        bg-[#F7F7F7]
+
+        overflow-hidden
+      "
+    >
 
       {/* DECORATIVE BLOCKS */}
 
-      {/* TOP CENTER */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 rotate-[28deg] w-[90px] h-[90px] md:w-[130px] md:h-[130px] bg-[#F4EAD7] rounded-[30px] md:rounded-[36px] opacity-90"></div>
+      <div
+        className="
+          absolute
 
-      {/* BOTTOM LEFT */}
-      <div className="absolute bottom-10 left-6 md:left-40 rotate-[-10deg] w-[90px] h-[90px] md:w-[120px] md:h-[120px] bg-[#F4EAD7] rounded-[28px] md:rounded-[36px] opacity-90"></div>
+          top-10
+          left-1/2
 
-      {/* RIGHT CENTER */}
-      <div className="absolute top-1/2 right-[-40px] -translate-y-1/2 rotate-[28deg] w-[100px] h-[100px] md:w-[140px] md:h-[140px] bg-[#F4EAD7] rounded-[28px] md:rounded-[36px] opacity-90"></div>
+          -translate-x-1/2
 
-      <div className="max-w-[1180px] mx-auto px-5 md:px-6 relative z-10">
+          rotate-[28deg]
+
+          w-[90px]
+          h-[90px]
+
+          md:w-[130px]
+          md:h-[130px]
+
+          bg-[#F4EAD7]
+
+          rounded-[30px]
+          md:rounded-[36px]
+
+          opacity-90
+        "
+      ></div>
+
+      <div
+        className="
+          absolute
+
+          bottom-10
+          left-6
+
+          md:left-40
+
+          rotate-[-10deg]
+
+          w-[90px]
+          h-[90px]
+
+          md:w-[120px]
+          md:h-[120px]
+
+          bg-[#F4EAD7]
+
+          rounded-[28px]
+          md:rounded-[36px]
+
+          opacity-90
+        "
+      ></div>
+
+      <div
+        className="
+          absolute
+
+          top-1/2
+          right-[-40px]
+
+          -translate-y-1/2
+
+          rotate-[28deg]
+
+          w-[100px]
+          h-[100px]
+
+          md:w-[140px]
+          md:h-[140px]
+
+          bg-[#F4EAD7]
+
+          rounded-[28px]
+          md:rounded-[36px]
+
+          opacity-90
+        "
+      ></div>
+
+      <div
+        className="
+          max-w-[1180px]
+
+          mx-auto
+
+          px-5
+          md:px-6
+
+          relative
+          z-10
+        "
+      >
 
         {/* HEADING */}
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-8 mb-12 md:mb-16">
+        <div
+          className="
+            flex
+            flex-col
+
+            md:flex-row
+            md:items-end
+            md:justify-between
+
+            gap-6
+            md:gap-8
+
+            mb-12
+            md:mb-16
+          "
+        >
 
           <div>
 
-            <p className="uppercase tracking-[4px] text-primary font-black text-xs md:text-sm mb-4 md:mb-5">
+            <p
+              className="
+                uppercase
+
+                tracking-[4px]
+
+                text-primary
+
+                font-black
+
+                text-xs
+                md:text-sm
+
+                mb-4
+                md:mb-5
+              "
+            >
               WHAT'S ON
             </p>
 
-            <h2 className="text-[34px] sm:text-[42px] md:text-[64px] leading-[1] font-black text-black">
+            <h2
+              className="
+                text-[34px]
+                sm:text-[42px]
+                md:text-[64px]
+
+                leading-[1]
+
+                font-black
+
+                text-black
+              "
+            >
               Upcoming Events
             </h2>
 
           </div>
 
-          <button className="text-primary font-bold text-[15px] md:text-[16px] hover:translate-x-1 transition-all duration-300">
+          <button
+            className="
+              text-primary
+
+              font-bold
+
+              text-[15px]
+              md:text-[16px]
+
+              hover:translate-x-1
+
+              transition-all
+              duration-300
+            "
+          >
             View All Events →
           </button>
 
         </div>
 
-        {/* MOBILE CAROUSEL */}
+        {/* MOBILE SLIDER */}
 
         <div className="relative md:hidden">
 
           {/* LEFT BUTTON */}
 
           <button
+            id="events-prev"
+
             onClick={() => {
+
               document
                 .getElementById("eventsSlider")
                 .scrollBy({
                   left: -320,
                   behavior: "smooth",
                 });
+
             }}
+
             className="
+              hidden
+
               absolute
-              left-0
+
+              left-2
               top-1/2
+
               -translate-y-1/2
+
               z-20
 
               w-11
@@ -97,17 +260,21 @@ const Events = () => {
               rounded-full
 
               bg-white
-              shadow-2xl
+
+              shadow-xl
 
               flex
               items-center
               justify-center
 
               text-primary
+
               text-xl
+
               font-black
 
               active:scale-95
+
               transition-all
               duration-300
             "
@@ -118,19 +285,27 @@ const Events = () => {
           {/* RIGHT BUTTON */}
 
           <button
+            id="events-next"
+
             onClick={() => {
+
               document
                 .getElementById("eventsSlider")
                 .scrollBy({
                   left: 320,
                   behavior: "smooth",
                 });
+
             }}
+
             className="
               absolute
-              right-0
+
+              right-2
               top-1/2
+
               -translate-y-1/2
+
               z-20
 
               w-11
@@ -139,17 +314,21 @@ const Events = () => {
               rounded-full
 
               bg-white
-              shadow-2xl
+
+              shadow-xl
 
               flex
               items-center
               justify-center
 
               text-primary
+
               text-xl
+
               font-black
 
               active:scale-95
+
               transition-all
               duration-300
             "
@@ -161,20 +340,74 @@ const Events = () => {
 
           <div
             id="eventsSlider"
+
+            onScroll={(e) => {
+
+              const slider = e.target;
+
+              const prevBtn =
+                document.getElementById(
+                  "events-prev"
+                );
+
+              const nextBtn =
+                document.getElementById(
+                  "events-next"
+                );
+
+              if (!prevBtn || !nextBtn)
+                return;
+
+              /* LEFT BUTTON */
+
+              if (slider.scrollLeft <= 10) {
+
+                prevBtn.classList.add(
+                  "hidden"
+                );
+
+              } else {
+
+                prevBtn.classList.remove(
+                  "hidden"
+                );
+              }
+
+              /* RIGHT BUTTON */
+
+              if (
+                slider.scrollLeft +
+                  slider.clientWidth >=
+                slider.scrollWidth - 10
+              ) {
+
+                nextBtn.classList.add(
+                  "hidden"
+                );
+
+              } else {
+
+                nextBtn.classList.remove(
+                  "hidden"
+                );
+              }
+            }}
+
             className="
               flex
+
               gap-5
+
               overflow-x-auto
+
               snap-x
               snap-mandatory
 
               scroll-smooth
 
               scrollbar-hide
-
-              px-2
-              pb-2
             "
+
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
@@ -182,16 +415,25 @@ const Events = () => {
           >
 
             {events.map((item, index) => (
+
               <div
                 key={index}
+
                 className="
-                  min-w-[92%]
+                  min-w-full
+
                   snap-center
+
                   bg-primary
+
                   rounded-[32px]
+
                   p-6
+
                   text-white
+
                   shadow-xl
+
                   flex
                   flex-col
                   justify-between
@@ -207,19 +449,27 @@ const Events = () => {
                   <div
                     className="
                       bg-white
+
                       text-primary
+
                       w-[72px]
                       h-[72px]
+
                       rounded-[20px]
+
                       flex
                       flex-col
                       items-center
                       justify-center
+
                       font-black
+
                       leading-none
+
                       mb-6
                     "
                   >
+
                     <span className="text-[32px]">
                       {item.day}
                     </span>
@@ -227,6 +477,7 @@ const Events = () => {
                     <span className="text-[16px] mt-1">
                       {item.month}
                     </span>
+
                   </div>
 
                   {/* TAG */}
@@ -234,13 +485,20 @@ const Events = () => {
                   <div
                     className="
                       inline-block
+
                       bg-white/20
+
                       px-3
                       py-[5px]
+
                       rounded-full
+
                       text-[10px]
+
                       font-bold
+
                       tracking-wide
+
                       mb-4
                     "
                   >
@@ -249,25 +507,58 @@ const Events = () => {
 
                   {/* TITLE */}
 
-                  <h3 className="text-[28px] leading-[1.1] font-black mb-4">
+                  <h3
+                    className="
+                      text-[28px]
+
+                      leading-[1.1]
+
+                      font-black
+
+                      mb-4
+                    "
+                  >
                     {item.title}
                   </h3>
 
                   {/* DESC */}
 
-                  <p className="text-white/90 text-[15px] leading-7 mb-6">
+                  <p
+                    className="
+                      text-white/90
+
+                      text-[15px]
+
+                      leading-7
+
+                      mb-6
+                    "
+                  >
                     {item.desc}
                   </p>
 
                   {/* META */}
 
-                  <div className="space-y-3 text-[13px] text-white/80 font-semibold">
+                  <div
+                    className="
+                      space-y-3
+
+                      text-[13px]
+
+                      text-white/80
+
+                      font-semibold
+                    "
+                  >
 
                     {/* TIME */}
 
                     <div className="flex items-center gap-2">
+
                       <span>◷</span>
+
                       <span>{item.time}</span>
+
                     </div>
 
                     {/* LOCATION */}
@@ -293,14 +584,21 @@ const Events = () => {
                 <button
                   className="
                     mt-8
+
                     border-2
                     border-white
+
                     py-4
+
                     rounded-full
+
                     font-black
+
                     text-[15px]
+
                     hover:bg-white
                     hover:text-primary
+
                     transition-all
                     duration-300
                   "
@@ -309,6 +607,7 @@ const Events = () => {
                 </button>
 
               </div>
+
             ))}
 
           </div>
@@ -320,45 +619,62 @@ const Events = () => {
         <div className="hidden md:block space-y-8">
 
           {events.map((item, index) => (
+
             <div
               key={index}
+
               className="
                 bg-primary
+
                 rounded-[36px]
+
                 px-6
                 py-7
+
                 flex
                 flex-col
+
                 lg:flex-row
                 lg:items-center
+
                 justify-between
+
                 gap-8
+
                 text-white
+
                 shadow-xl
               "
             >
 
-              {/* LEFT SIDE */}
+              {/* LEFT */}
 
               <div className="flex items-center gap-6">
 
-                {/* DATE BOX */}
+                {/* DATE */}
 
                 <div
                   className="
                     bg-white
+
                     text-primary
+
                     min-w-[72px]
                     h-[72px]
+
                     rounded-[22px]
+
                     flex
                     flex-col
                     items-center
                     justify-center
+
                     font-black
+
                     leading-none
                   "
                 >
+
                   <span className="text-[34px]">
                     {item.day}
                   </span>
@@ -366,54 +682,90 @@ const Events = () => {
                   <span className="text-[18px] mt-1">
                     {item.month}
                   </span>
+
                 </div>
 
                 {/* CONTENT */}
 
                 <div>
 
-                  {/* TAG */}
-
                   <div
                     className="
                       inline-block
+
                       bg-white/20
+
                       px-3
                       py-[5px]
+
                       rounded-full
+
                       text-[10px]
+
                       font-bold
+
                       tracking-wide
+
                       mb-3
                     "
                   >
                     {item.type}
                   </div>
 
-                  {/* TITLE */}
+                  <h3
+                    className="
+                      text-[34px]
 
-                  <h3 className="text-[34px] leading-[1.1] font-black mb-3">
+                      leading-[1.1]
+
+                      font-black
+
+                      mb-3
+                    "
+                  >
                     {item.title}
                   </h3>
 
-                  {/* DESC */}
+                  <p
+                    className="
+                      text-white/90
 
-                  <p className="text-white/90 text-[16px] leading-7 max-w-[760px] mb-4">
+                      text-[16px]
+
+                      leading-7
+
+                      max-w-[760px]
+
+                      mb-4
+                    "
+                  >
                     {item.desc}
                   </p>
 
-                  {/* META */}
+                  <div
+                    className="
+                      flex
+                      flex-wrap
 
-                  <div className="flex flex-wrap items-center gap-6 text-[13px] text-white/80 font-semibold">
+                      items-center
 
-                    {/* TIME */}
+                      gap-6
+
+                      text-[13px]
+
+                      text-white/80
+
+                      font-semibold
+                    "
+                  >
 
                     <div className="flex items-center gap-2">
-                      <span>◷</span>
-                      <span>{item.time}</span>
-                    </div>
 
-                    {/* LOCATION */}
+                      <span>◷</span>
+
+                      <span>{item.time}</span>
+
+                    </div>
 
                     <div className="flex items-center gap-2">
 
@@ -439,15 +791,22 @@ const Events = () => {
                 className="
                   border-2
                   border-white
+
                   px-8
                   py-4
+
                   rounded-full
+
                   font-black
+
                   text-[15px]
+
                   hover:bg-white
                   hover:text-primary
+
                   transition-all
                   duration-300
+
                   whitespace-nowrap
                 "
               >
@@ -455,6 +814,7 @@ const Events = () => {
               </button>
 
             </div>
+
           ))}
 
         </div>

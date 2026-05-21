@@ -8,18 +8,21 @@ const testimonials = [
     name: "Priya Sharma",
     role: "Parent of Aarav",
   },
+
   {
     review:
       "The teachers are extremely caring and patient. We noticed a huge improvement in our daughter’s creativity and communication.",
     name: "Rohit Verma",
     role: "Parent of Myra",
   },
+
   {
     review:
       "Safe environment, joyful learning, and excellent staff. Kidzee feels like a second home for our child.",
     name: "Sneha Kapoor",
     role: "Parent of Vihaan",
   },
+
   {
     review:
       "We were searching for a preschool that balances fun and learning. Kidzee exceeded all our expectations beautifully.",
@@ -29,11 +32,13 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+
   const sliderRef = useRef(null);
 
-  /* AUTO SLIDE MOBILE */
+  /* AUTO SLIDE */
 
   useEffect(() => {
+
     const slider = sliderRef.current;
 
     if (!slider) return;
@@ -41,13 +46,16 @@ const Testimonials = () => {
     let scrollAmount = 0;
 
     const autoSlide = setInterval(() => {
-      const cardWidth = slider.offsetWidth * 0.92 + 20;
+
+      const cardWidth =
+        slider.offsetWidth + 20;
 
       scrollAmount += cardWidth;
 
       if (
         scrollAmount >=
-        slider.scrollWidth - slider.clientWidth
+        slider.scrollWidth -
+          slider.clientWidth
       ) {
         scrollAmount = 0;
       }
@@ -56,44 +64,181 @@ const Testimonials = () => {
         left: scrollAmount,
         behavior: "smooth",
       });
+
     }, 3500);
 
-    return () => clearInterval(autoSlide);
+    return () =>
+      clearInterval(autoSlide);
+
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#E9D9F4] py-20 md:py-28">
 
-      {/* GLOW EFFECTS */}
+    <section
+      className="
+        relative
+        overflow-hidden
 
-      <div className="absolute top-[-220px] right-[-220px] w-[550px] h-[550px] bg-[#C58BEA] rounded-full blur-[160px] opacity-30"></div>
+        bg-[#E9D9F4]
 
-      <div className="absolute bottom-[-220px] left-[-220px] w-[550px] h-[550px] bg-[#B46DFF] rounded-full blur-[160px] opacity-30"></div>
+        py-20
+        md:py-28
+      "
+    >
 
-      {/* FLOATING BLOCKS */}
+      {/* GLOW EFFECT */}
 
-      <div className="absolute top-10 right-10 w-[110px] h-[110px] rotate-[20deg] rounded-[34px] bg-white/10"></div>
+      <div
+        className="
+          absolute
 
-      <div className="absolute bottom-10 left-10 w-[100px] h-[100px] rotate-[-14deg] rounded-[30px] bg-white/10"></div>
+          top-[-220px]
+          right-[-220px]
 
-      <div className="max-w-[1240px] mx-auto px-5 md:px-6 relative z-10">
+          w-[550px]
+          h-[550px]
+
+          bg-[#C58BEA]
+
+          rounded-full
+
+          blur-[160px]
+
+          opacity-30
+        "
+      ></div>
+
+      <div
+        className="
+          absolute
+
+          bottom-[-220px]
+          left-[-220px]
+
+          w-[550px]
+          h-[550px]
+
+          bg-[#B46DFF]
+
+          rounded-full
+
+          blur-[160px]
+
+          opacity-30
+        "
+      ></div>
+
+      {/* FLOATING SHAPES */}
+
+      <div
+        className="
+          absolute
+
+          top-10
+          right-10
+
+          w-[110px]
+          h-[110px]
+
+          rotate-[20deg]
+
+          rounded-[34px]
+
+          bg-white/10
+        "
+      ></div>
+
+      <div
+        className="
+          absolute
+
+          bottom-10
+          left-10
+
+          w-[100px]
+          h-[100px]
+
+          rotate-[-14deg]
+
+          rounded-[30px]
+
+          bg-white/10
+        "
+      ></div>
+
+      <div
+        className="
+          max-w-[1240px]
+          mx-auto
+
+          px-5
+          md:px-6
+
+          relative
+          z-10
+        "
+      >
 
         {/* HEADING */}
 
         <div className="text-center mb-14 md:mb-20">
 
-          <p className="uppercase tracking-[4px] text-primary font-black text-xs md:text-sm mb-4">
+          <p
+            className="
+              uppercase
+
+              tracking-[4px]
+
+              text-primary
+
+              font-black
+
+              text-xs
+              md:text-sm
+
+              mb-4
+            "
+          >
             TESTIMONIALS
           </p>
 
-          <h2 className="text-[38px] sm:text-[50px] md:text-[72px] leading-[1] font-black text-primary mb-5">
+          <h2
+            className="
+              text-[38px]
+              sm:text-[50px]
+              md:text-[72px]
+
+              leading-[1]
+
+              font-black
+
+              text-primary
+
+              mb-5
+            "
+          >
             What Parents Say
           </h2>
 
-          <p className="text-[#555] text-[16px] md:text-[22px] leading-8 md:leading-10 max-w-[850px] mx-auto">
-            Real stories from parents who trusted Kidzee to shape
-            their child’s early learning journey with love,
-            care, and joyful education.
+          <p
+            className="
+              text-[#555]
+
+              text-[16px]
+              md:text-[22px]
+
+              leading-8
+              md:leading-10
+
+              max-w-[850px]
+
+              mx-auto
+            "
+          >
+            Real stories from parents who trusted
+            Kidzee to shape their child’s early
+            learning journey with love, care,
+            and joyful education.
           </p>
 
         </div>
@@ -105,31 +250,44 @@ const Testimonials = () => {
           {/* LEFT BUTTON */}
 
           <button
+            id="testimonial-prev"
+
             onClick={() => {
+
               sliderRef.current.scrollBy({
                 left: -320,
                 behavior: "smooth",
               });
+
             }}
+
             className="
+              hidden
+
               absolute
-              left-0
+
+              left-2
               top-1/2
+
               -translate-y-1/2
+
               z-20
 
               w-11
               h-11
 
               rounded-full
+
               bg-white
-              shadow-2xl
+
+              shadow-xl
 
               flex
               items-center
               justify-center
 
               text-primary
+
               text-xl
               font-black
             "
@@ -140,31 +298,42 @@ const Testimonials = () => {
           {/* RIGHT BUTTON */}
 
           <button
+            id="testimonial-next"
+
             onClick={() => {
+
               sliderRef.current.scrollBy({
                 left: 320,
                 behavior: "smooth",
               });
+
             }}
+
             className="
               absolute
-              right-0
+
+              right-2
               top-1/2
+
               -translate-y-1/2
+
               z-20
 
               w-11
               h-11
 
               rounded-full
+
               bg-white
-              shadow-2xl
+
+              shadow-xl
 
               flex
               items-center
               justify-center
 
               text-primary
+
               text-xl
               font-black
             "
@@ -176,48 +345,277 @@ const Testimonials = () => {
 
           <div
             ref={sliderRef}
+
+            onScroll={(e) => {
+
+              const slider =
+                e.target;
+
+              const prevBtn =
+                document.getElementById(
+                  "testimonial-prev"
+                );
+
+              const nextBtn =
+                document.getElementById(
+                  "testimonial-next"
+                );
+
+              if (
+                !prevBtn ||
+                !nextBtn
+              )
+                return;
+
+              /* LEFT BUTTON */
+
+              if (
+                slider.scrollLeft <= 10
+              ) {
+
+                prevBtn.classList.add(
+                  "hidden"
+                );
+
+              } else {
+
+                prevBtn.classList.remove(
+                  "hidden"
+                );
+              }
+
+              /* RIGHT BUTTON */
+
+              if (
+                slider.scrollLeft +
+                  slider.clientWidth >=
+                slider.scrollWidth - 10
+              ) {
+
+                nextBtn.classList.add(
+                  "hidden"
+                );
+
+              } else {
+
+                nextBtn.classList.remove(
+                  "hidden"
+                );
+              }
+            }}
+
             className="
               flex
+
               gap-5
+
               overflow-x-auto
+
               snap-x
               snap-mandatory
+
               scroll-smooth
+
               scrollbar-hide
-              px-2
             "
+
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
             }}
           >
 
-            {testimonials.map((item, index) => (
+            {testimonials.map(
+              (item, index) => (
+
+                <div
+                  key={index}
+
+                  className="
+                    min-w-full
+
+                    snap-center
+
+                    bg-white/75
+
+                    backdrop-blur-xl
+
+                    rounded-[34px]
+
+                    p-7
+
+                    shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+
+                    border
+                    border-white/40
+
+                    flex
+                    flex-col
+                    justify-between
+
+                    min-h-[420px]
+                  "
+                >
+
+                  <div>
+
+                    {/* STARS */}
+
+                    <div className="flex gap-1 mb-7">
+
+                      {[1, 2, 3, 4, 5].map(
+                        (star) => (
+
+                          <Star
+                            key={star}
+                            size={18}
+                            className="
+                              fill-[#FFB800]
+                              text-[#FFB800]
+                            "
+                          />
+
+                        )
+                      )}
+
+                    </div>
+
+                    {/* REVIEW */}
+
+                    <p
+                      className="
+                        text-[#444]
+
+                        text-[16px]
+
+                        leading-9
+                      "
+                    >
+                      {item.review}
+                    </p>
+
+                  </div>
+
+                  {/* USER */}
+
+                  <div
+                    className="
+                      flex
+                      items-center
+
+                      gap-4
+
+                      mt-10
+                    "
+                  >
+
+                    <div
+                      className="
+                        w-14
+                        h-14
+
+                        rounded-full
+
+                        bg-gradient-to-br
+                        from-[#A855F7]
+                        to-[#732D92]
+
+                        flex
+                        items-center
+                        justify-center
+
+                        text-white
+
+                        font-black
+                        text-lg
+
+                        shadow-xl
+                      "
+                    >
+                      {item.name.charAt(0)}
+                    </div>
+
+                    <div>
+
+                      <h4
+                        className="
+                          font-black
+
+                          text-[18px]
+
+                          text-black
+                        "
+                      >
+                        {item.name}
+                      </h4>
+
+                      <p
+                        className="
+                          text-[#777]
+
+                          text-sm
+
+                          font-medium
+                        "
+                      >
+                        {item.role}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              )
+            )}
+
+          </div>
+
+        </div>
+
+        {/* DESKTOP GRID */}
+
+        <div
+          className="
+            hidden
+            md:grid
+
+            md:grid-cols-2
+            lg:grid-cols-4
+
+            gap-7
+          "
+        >
+
+          {testimonials.map(
+            (item, index) => (
+
               <div
                 key={index}
-                className="
-                  min-w-[92%]
-                  snap-center
 
+                className="
                   bg-white/75
+
                   backdrop-blur-xl
 
-                  rounded-[34px]
+                  rounded-[36px]
 
-                  p-7
+                  p-9
 
                   shadow-[0_15px_40px_rgba(0,0,0,0.08)]
 
                   border
                   border-white/40
 
+                  min-h-[470px]
+
                   flex
                   flex-col
                   justify-between
 
-                  min-h-[420px]
+                  hover:-translate-y-3
 
-                  hover:-translate-y-2
+                  hover:shadow-2xl
 
                   transition-all
                   duration-500
@@ -228,21 +626,36 @@ const Testimonials = () => {
 
                   {/* STARS */}
 
-                  <div className="flex gap-1 mb-7">
+                  <div className="flex gap-1 mb-8">
 
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        size={18}
-                        className="fill-[#FFB800] text-[#FFB800]"
-                      />
-                    ))}
+                    {[1, 2, 3, 4, 5].map(
+                      (star) => (
+
+                        <Star
+                          key={star}
+                          size={20}
+                          className="
+                            fill-[#FFB800]
+                            text-[#FFB800]
+                          "
+                        />
+
+                      )
+                    )}
 
                   </div>
 
                   {/* REVIEW */}
 
-                  <p className="text-[#444] text-[16px] leading-9">
+                  <p
+                    className="
+                      text-[#444]
+
+                      text-[18px]
+
+                      leading-10
+                    "
+                  >
                     {item.review}
                   </p>
 
@@ -250,12 +663,21 @@ const Testimonials = () => {
 
                 {/* USER */}
 
-                <div className="flex items-center gap-4 mt-10">
+                <div
+                  className="
+                    flex
+                    items-center
+
+                    gap-4
+
+                    mt-10
+                  "
+                >
 
                   <div
                     className="
-                      w-14
-                      h-14
+                      w-16
+                      h-16
 
                       rounded-full
 
@@ -268,8 +690,9 @@ const Testimonials = () => {
                       justify-center
 
                       text-white
+
                       font-black
-                      text-lg
+                      text-xl
 
                       shadow-xl
                     "
@@ -279,11 +702,29 @@ const Testimonials = () => {
 
                   <div>
 
-                    <h4 className="font-black text-[18px] text-black">
+                    <h4
+                      className="
+                        font-black
+
+                        text-[22px]
+
+                        text-black
+
+                        leading-tight
+                      "
+                    >
                       {item.name}
                     </h4>
 
-                    <p className="text-[#777] text-sm font-medium">
+                    <p
+                      className="
+                        text-[#777]
+
+                        font-medium
+
+                        mt-1
+                      "
+                    >
                       {item.role}
                     </p>
 
@@ -292,119 +733,8 @@ const Testimonials = () => {
                 </div>
 
               </div>
-            ))}
-
-          </div>
-
-        </div>
-
-        {/* DESKTOP GRID */}
-
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-7">
-
-          {testimonials.map((item, index) => (
-            <div
-              key={index}
-              className="
-                bg-white/75
-                backdrop-blur-xl
-
-                rounded-[36px]
-
-                p-9
-
-                shadow-[0_15px_40px_rgba(0,0,0,0.08)]
-
-                border
-                border-white/40
-
-                min-h-[470px]
-
-                flex
-                flex-col
-                justify-between
-
-                hover:-translate-y-3
-                hover:shadow-2xl
-
-                transition-all
-                duration-500
-              "
-            >
-
-              <div>
-
-                {/* STARS */}
-
-                <div className="flex gap-1 mb-8">
-
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={20}
-                      className="fill-[#FFB800] text-[#FFB800]"
-                    />
-                  ))}
-
-                </div>
-
-                {/* REVIEW */}
-
-                <p className="text-[#444] text-[18px] leading-10">
-                  {item.review}
-                </p>
-
-              </div>
-
-              {/* USER */}
-
-              <div className="flex items-center gap-4 mt-10">
-
-                {/* AVATAR */}
-
-                <div
-                  className="
-                    w-16
-                    h-16
-
-                    rounded-full
-
-                    bg-gradient-to-br
-                    from-[#A855F7]
-                    to-[#732D92]
-
-                    flex
-                    items-center
-                    justify-center
-
-                    text-white
-                    font-black
-                    text-xl
-
-                    shadow-xl
-                  "
-                >
-                  {item.name.charAt(0)}
-                </div>
-
-                {/* INFO */}
-
-                <div>
-
-                  <h4 className="font-black text-[22px] text-black leading-tight">
-                    {item.name}
-                  </h4>
-
-                  <p className="text-[#777] font-medium mt-1">
-                    {item.role}
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-          ))}
+            )
+          )}
 
         </div>
 
