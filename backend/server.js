@@ -7,33 +7,17 @@ dotenv.config();
 
 const app = express();
 
-/* =========================
-   CORS FIX
-========================= */
-
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-app.options("*", cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json());
-
-/* =========================
-   TEST ROUTE
-========================= */
 
 app.get("/", (req, res) => {
   res.send("Kidzee Backend Running");
 });
-
-/* =========================
-   NODEMAILER
-========================= */
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -45,14 +29,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-/* =========================
-   ENQUIRY FORM
-========================= */
-
 app.post("/api/enquiry", async (req, res) => {
   try {
     const { parentName, childName, phone, email, message } = req.body;
-
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -66,23 +45,16 @@ app.post("/api/enquiry", async (req, res) => {
         <p><b>Message:</b> ${message}</p>
       `,
     });
-
     res.status(200).json({ success: true, message: "Enquiry submitted successfully" });
-
   } catch (error) {
     console.error("ENQUIRY ERROR:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/* =========================
-   CAMPUS VISIT
-========================= */
-
 app.post("/api/campus-visit", async (req, res) => {
   try {
     const { parentName, childName, phone, email, address, date, time, notes } = req.body;
-
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -99,23 +71,16 @@ app.post("/api/campus-visit", async (req, res) => {
         <p><b>Notes:</b> ${notes}</p>
       `,
     });
-
     res.status(200).json({ success: true, message: "Campus Visit Scheduled" });
-
   } catch (error) {
     console.error("CAMPUS VISIT ERROR:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/* =========================
-   EVENT ENROLLMENT
-========================= */
-
 app.post("/api/event-enrollment", async (req, res) => {
   try {
     const { parentName, childName, phone, email, address, event, notes } = req.body;
-
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -131,21 +96,14 @@ app.post("/api/event-enrollment", async (req, res) => {
         <p><b>Notes:</b> ${notes}</p>
       `,
     });
-
     res.status(200).json({ success: true, message: "Event Enrollment Successful" });
-
   } catch (error) {
     console.error("EVENT ENROLLMENT ERROR:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/* =========================
-   PORT
-========================= */
-
 const PORT = process.env.PORT || 8000;
-
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
