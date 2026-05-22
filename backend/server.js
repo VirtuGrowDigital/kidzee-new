@@ -66,9 +66,10 @@ app.post("/api/enquiry", async (req, res) => {
     });
 
     res.status(200).json({ success: true, message: "Enquiry submitted successfully" });
+
   } catch (error) {
-    console.error("Enquiry Error:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
+    console.error("ENQUIRY ERROR:", error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 
@@ -98,9 +99,10 @@ app.post("/api/campus-visit", async (req, res) => {
     });
 
     res.status(200).json({ success: true, message: "Campus Visit Scheduled" });
+
   } catch (error) {
-    console.error("Campus Visit Error:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
+    console.error("CAMPUS VISIT ERROR:", error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 
@@ -129,9 +131,10 @@ app.post("/api/event-enrollment", async (req, res) => {
     });
 
     res.status(200).json({ success: true, message: "Event Enrollment Successful" });
+
   } catch (error) {
-    console.error("Event Enrollment Error:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
+    console.error("EVENT ENROLLMENT ERROR:", error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 
